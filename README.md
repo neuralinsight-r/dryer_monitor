@@ -1,6 +1,6 @@
 # Dryer_Buzzer (IoT Appliance State Monitor)
 
-An IoT automation solution deployed on a Raspberry Pi Zeor W (v1) that utilizes an ADXL345 accelerometer to track dryer vibration cycles. It incorporates a time-delayed state machine to prevent false positives and alerts users via a physical GPIO buzzer and SMS notifications via the Twilio API upon cycle completion.
+My mom's dryer didn't come with a buzzer nor does it support one as an available option. This is a small passion project to resolve the issue of mom not knowing when the cycle was complete aside from either setting a timer on her phone and/or periodically checking on the dryer. An IoT automation solution deployed on a Raspberry Pi Zeor W (v1) that utilizes an ADXL345 accelerometer to track dryer vibration cycles. It incorporates a time-delayed state machine to prevent false positives and alerts users via a physical GPIO buzzer and SMS notifications via the Twilio API upon cycle completion.
 
 ## 🛠️ Engineering & QA Highlights
 From a Quality Engineering perspective, this project emphasizes robust error boundaries, security, and edge-case resilience:
