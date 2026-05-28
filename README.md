@@ -31,4 +31,5 @@ From a Quality Engineering perspective, this project emphasizes robust error bou
    ```bash
    python3 main.py
 
+## 🧪 Comprehensive QA Test Suite
 See test_cases.md for the complete end-to-end validation matrix covering boundary testing, state transitions, and error injection.
