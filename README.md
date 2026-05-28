@@ -23,3 +23,10 @@ From a Quality Engineering perspective, this project emphasizes robust error bou
    ```bash
    git clone [https://github.com/neuralinsight-r/Dryer_Buzzer.git](https://github.com/neuralinsight-r/Dryer_Buzzer.git)
    cd Dryer_Buzzer
+2. Configure security credentials on your host machine:
+   ```bash
+   export TWILIO_ACCOUNT_SID='your_actual_sid'
+   export TWILIO_AUTH_TOKEN='your_actual_token'
+3. Execute the script:
+   ```bash
+   python3 main.py
