@@ -1,6 +1,6 @@
 # Dryer_Buzzer (IoT Appliance State Monitor)
 
-My mom's dryer didn't come with a buzzer nor does it support one as an available option. This is a small passion project to resolve the issue of mom not knowing when the cycle was complete aside from either setting a timer on her phone and/or periodically checking on the dryer. An IoT automation solution deployed on a Raspberry Pi Zeor W (v1) that utilizes an ADXL345 accelerometer to track dryer vibration cycles. It incorporates a time-delayed state machine to prevent false positives and alerts users via a physical GPIO buzzer and SMS notifications via the Twilio API upon cycle completion.
+My mom's dryer didn't come with a buzzer nor does it support one as an available option. This is a small passion project to resolve the issue of mom not knowing when the cycle was complete aside from either setting a timer on her phone and/or periodically checking on the dryer. An IoT automation solution deployed on a Raspberry Pi Zeor W (v1) that utilizes an ADXL345 accelerometer to track dryer vibration cycles. It incorporates a time-delayed state machine to prevent false positives and alerts users via a physical GPIO buzzer and ~~SMS notifications via the Twilio API~~ Telegram push notification bot upon cycle completion. *A2P 10DLC registration made SMS notifications via Twilio out of scope at this stage hence the pivot to push notifications.*
 
 ## 🛠️ Engineering & QA Highlights
 From a Quality Engineering perspective, this project emphasizes robust error boundaries, security, and edge-case resilience:
@@ -25,8 +25,8 @@ From a Quality Engineering perspective, this project emphasizes robust error bou
    cd Dryer_Buzzer
 2. Configure security credentials on your host machine:
    ```bash
-   export TWILIO_ACCOUNT_SID='your_actual_sid'
-   export TWILIO_AUTH_TOKEN='your_actual_token'
+   export TELEGRAM_BOT_TOKEN='your_actual_bot_token'
+   export TELEGRAM_CHAT_ID='your_actual_chat_id'
 3. Execute the script:
    ```bash
    python3 main.py
