@@ -30,3 +30,5 @@ From a Quality Engineering perspective, this project emphasizes robust error bou
 3. Execute the script:
    ```bash
    python3 main.py
+
+See test_cases.md for the complete end-to-end validation matrix covering boundary testing, state transitions, and error injection.
