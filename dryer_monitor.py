@@ -7,24 +7,18 @@ import busio
 import adafruit_adxl34x
 import RPi.GPIO as GPIO
 
-from twilio.rest import Client
+import urllib.request
+import urllib.parse
+import json
 
 # =========================================================
 # --- CONFIGURATION ---
 # =========================================================
 
-# Twilio settings are now read from environment variables
-# Export these in your terminal before running:
-#
-# export TWILIO_ACCOUNT_SID='your_sid'
-# export TWILIO_AUTH_TOKEN='your_token'
-#
-TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH_TOKEN = os.environ['TWILIO_AUTH_TOKEN']
+# Replace Twilio variables with Telegram variables
+TELEGRAM_BOT_TOKEN = os.environ['TELEGRAM_BOT_TOKEN']
+TELEGRAM_CHAT_ID = os.environ['TELEGRAM_CHAT_ID']
 
-# Phone numbers
-FROM_NUMBER = '+5555555555'   # Your Twilio number
-TO_NUMBER = '+8888888888'     # Your cell phone number
 
 # Pins
 BUZZER_PIN = 18  # GPIO 18
@@ -58,8 +52,7 @@ try:
     GPIO.setup(BUZZER_PIN, GPIO.OUT)
     GPIO.output(BUZZER_PIN, GPIO.LOW)
 
-    # Initialize Twilio client
-    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    # === TWILIO CLIENT REMOVED FROM HERE ===
 
     logging.info("System initialized successfully.")
 
@@ -71,18 +64,23 @@ except Exception as e:
 # --- FUNCTIONS ---
 # =========================================================
 
-def send_sms(message):
+def send_push(message):
     try:
-        client.messages.create(
-            to=TO_NUMBER,
-            from_=FROM_NUMBER,
-            body=message
-        )
-
-        logging.info("SMS notification sent.")
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        data = urllib.parse.urlencode({
+            'chat_id': TELEGRAM_CHAT_ID,
+            'text': message
+        }).encode('utf-8')
+        
+        req = urllib.request.Request(url, data=data)
+        with urllib.request.urlopen(req) as response:
+            if response.status == 200:
+                logging.info("Telegram push notification sent successfully.")
+            else:
+                logging.error(f"Telegram API returned status: {response.status}")
 
     except Exception as e:
-        logging.error(f"Failed to send SMS: {e}")
+        logging.error(f"Failed to send Telegram notification: {e}")
 
 def trigger_buzzer():
     logging.info("Triggering buzzer.")
@@ -163,7 +161,7 @@ try:
 
                 trigger_buzzer()
 
-                send_sms(
+                send_push(
                     "Laundry is dry! Come get it while it's warm."
                 )
 
