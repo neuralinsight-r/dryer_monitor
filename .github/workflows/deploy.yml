@@ -17,7 +17,7 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.PI_TAILSCALE_IP }}
-          username: pi
+          username: robert
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
             cd /home/robert/dryer_monitor
