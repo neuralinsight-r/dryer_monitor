@@ -24,7 +24,7 @@ TELEGRAM_BOT_TOKEN = os.environ['TELEGRAM_BOT_TOKEN']
 TELEGRAM_CHAT_ID   = os.environ['TELEGRAM_CHAT_ID']
 
 BUZZER_PIN         = 18       # GPIO 18
-VIBRATION_THRESHOLD = 1.5
+VIBRATION_THRESHOLD = 0.45
 START_DELAY        = 300      # 5 minutes
 STOP_DELAY         = 120      # 2 minutes
 
