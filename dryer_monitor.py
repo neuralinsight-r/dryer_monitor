@@ -219,28 +219,41 @@ def get_current_status():
             "hasn't ended. There may be a sensor issue."
         )
 
+        if state == "RUNNING" and start_time:
+        elapsed = int(time.time() - start_time)
+        hours, remainder = divmod(elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        if hours > 0:
+            elapsed_str = f"{hours}h {minutes}m {seconds}s"
+        else:
+            elapsed_str = f"{minutes}m {seconds}s"
+        return (
+            "ti-washing-machine", "success",
+            "Running",
+            f"The dryer is running.",
+            elapsed_str
+        )
+
     return {
         "IDLE": (
             "ti-zzz", "secondary",
             "Idle",
-            "The dryer isn't running."
+            "The dryer isn't running.",
+            None
         ),
         "STARTING": (
             "ti-loader", "warning",
             "Starting",
-            "Vibration detected — confirming the dryer is on."
-        ),
-        "RUNNING": (
-            "ti-washing-machine", "success",
-            "Running",
-            "The dryer is running."
+            "Vibration detected — confirming the dryer is on.",
+            None
         ),
         "WAITING_TO_STOP": (
             "ti-clock-hour-4", "warning",
             "Finishing",
-            "Vibration stopped — confirming the cycle has ended."
+            "Vibration stopped — confirming the cycle has ended.",
+            None
         ),
-    }.get(state, ("ti-question-mark", "secondary", "Unknown", "Status unavailable."))
+    }.get(state, ("ti-question-mark", "secondary", "Unknown", "Status unavailable.", None))
 
 
 COLOR_MAP = {
@@ -254,7 +267,7 @@ COLOR_MAP = {
 class StatusHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        icon, color_key, label, description = get_current_status()
+        icon, color_key, label, description, elapsed = get_current_status()
         history = get_cycle_history()
 
         bg, text_strong, text_dark = COLOR_MAP[color_key]
@@ -311,10 +324,11 @@ class StatusHandler(BaseHTTPRequestHandler):
   <div class="page">
 
     <div class="label">Current status</div>
-    <div class="card">
+       <div class="card">
       <div class="icon-wrap"><i class="ti {icon}"></i></div>
       <div class="status-label">{label}</div>
       <div class="status-desc">{description}</div>
+      {f'<div style="margin-top:12px;font-size:28px;font-weight:600;color:#2d6a4f;letter-spacing:0.02em;">{elapsed}</div><div style="font-size:12px;color:#9ca3af;margin-top:4px;">elapsed</div>' if elapsed else ''}
     </div>
 
     <div class="label">Last 5 completed cycles</div>
