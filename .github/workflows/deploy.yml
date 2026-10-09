@@ -17,9 +17,9 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.PI_TAILSCALE_IP }}
-          username: robert
+          username: dryer
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
-            cd /home/robert/dryer_monitor
+            cd /home/dryer/dryer_monitor
             git pull origin main
             sudo systemctl restart dryer_monitor
