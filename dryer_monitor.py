@@ -220,19 +220,19 @@ def get_current_status():
         )
 
         if state == "RUNNING" and start_time:
-        elapsed = int(time.time() - start_time)
-        hours, remainder = divmod(elapsed, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        if hours > 0:
-            elapsed_str = f"{hours}h {minutes}m {seconds}s"
-        else:
-            elapsed_str = f"{minutes}m {seconds}s"
-        return (
-            "ti-washing-machine", "success",
-            "Running",
-            f"The dryer is running.",
-            elapsed_str
-        )
+            elapsed = int(time.time() - start_time)
+            hours, remainder = divmod(elapsed, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            if hours > 0:
+                elapsed_str = f"{hours}h {minutes}m {seconds}s"
+            else:
+                elapsed_str = f"{minutes}m {seconds}s"
+            return (
+                "ti-washing-machine", "success",
+                "Running",
+                f"The dryer is running.",
+                elapsed_str
+            )
 
     return {
         "IDLE": (
